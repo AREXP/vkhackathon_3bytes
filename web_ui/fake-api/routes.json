@@ -1,5 +1,5 @@
 {
   "/courses": "/courses",
-  "/courses/1": "/first_course",
-  "/courses/2": "/second_course"
+  "/courses/0": "/first_course",
+  "/courses/1": "/second_course"
 }

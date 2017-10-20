@@ -3,6 +3,8 @@ import {
   BrowserRouter as Router,
   Route,
 } from 'react-router-dom'
+import styled from 'react-emotion'
+import { padding } from 'styles/palette'
 import { Course } from './routes/Course'
 import { Courses, reducer as courses } from './routes/Courses'
 
@@ -10,11 +12,15 @@ export const reducers = {
   courses,
 }
 
+const AppWrapper = styled('div')`
+  padding: ${padding.L};
+`
+
 export const App = () => (
   <Router>
-    <div>
+    <AppWrapper>
       <Route exact path="/" component={Courses} />
       <Route path="/:course" component={Course} />
-    </div>
+    </AppWrapper>
   </Router>
 )

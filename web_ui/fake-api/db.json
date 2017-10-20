@@ -27,7 +27,7 @@
     "title": "Learn to program",
     "description": "This Specialization builds on the success of the Python for Everybody course",
     "createdAt": 1508511000,
-    "is_active": true,
+    "isActive": true,
     "attachments": [{
       "type": 1,
       "owner": 1,
@@ -39,7 +39,7 @@
     "title": "JavaScript",
     "description": "New course about web-development, UI, HTML, CSS",
     "createdAt": 1508510000,
-    "is_active": false,
+    "isActive": false,
     "attachments": [{
       "type": 2,
       "owner": 2,
