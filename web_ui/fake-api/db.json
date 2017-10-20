@@ -1,0 +1,49 @@
+{
+  "courses": {
+    "content": [{
+      "id": 0,
+      "title": "Learn to program",
+      "description": "This Specialization builds on the success of the Python for Everybody course",
+      "createdAt": 1508511000,
+      "isActive": true
+    }, {
+      "id": 1,
+      "title": "JavaScript",
+      "description": "New course about web-development, UI, HTML, CSS",
+      "createdAt": 1508510000,
+      "isActive": false
+    }],
+    "last": true,
+    "totalPages": 1,
+    "totalElements": 0,
+    "size": 0,
+    "number": 0,
+    "sort": null,
+    "numberOfElements": 0,
+    "first": true
+  },
+  "first_course": {
+    "id": 0,
+    "title": "Learn to program",
+    "description": "This Specialization builds on the success of the Python for Everybody course",
+    "createdAt": 1508511000,
+    "is_active": true,
+    "attachments": [{
+      "type": 1,
+      "owner": 1,
+      "media_id": 1
+    }]
+  },
+  "second_course": {
+    "id": 1,
+    "title": "JavaScript",
+    "description": "New course about web-development, UI, HTML, CSS",
+    "createdAt": 1508510000,
+    "is_active": false,
+    "attachments": [{
+      "type": 2,
+      "owner": 2,
+      "media_id": 2
+    }]
+  } 
+}
