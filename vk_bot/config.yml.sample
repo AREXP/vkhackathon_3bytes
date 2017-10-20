@@ -1,0 +1,20 @@
+commands:
+    /start: 'start command'
+    /help: 'help command'
+    /show_courses: 'all courses'
+    /take_course: 'take course'
+    /next: 'next step'
+    /prev: 'prev step'
+    /answer: 'отправка ответа на тест'
+    /progress: 'Прогресс текущего курса'
+    /full_progress: 'Прогресс всех курсов'
+    /leave: 'Leave this course for now'
+    /delete: 'Delete the course from user course list'
+
+VK:
+    TOKEN: ''
+    PATH: 'https://api.vk.com/method/'
+
+API:
+    SERVER: 'localhost'
+    PORT: 9090
