@@ -1,5 +1,5 @@
 import { put, call, takeEvery } from 'redux-saga/effects'
-import { get, vkGet, remove } from '../../api'
+import { get, vkapi, remove } from '../../api'
 import { getCourses, setCourse, fetchCourse, fetchAllCourses, deleteCourse } from './module'
 
 export function* fetchAllCoursesSaga() {
@@ -14,7 +14,7 @@ export function* fetchCourseSaga({ payload }) {
 }
 
 export function* getAlbumSaga() {
-  const result = yield call(vkGet, `photos.getAlbums?owner_id=-1`)
+  const result = yield call(vkapi, { method: 'users.get' })
   console.log(result)
 }
 
@@ -31,5 +31,6 @@ function* watcher() {
 
 export default [
   fetchAllCoursesSaga(),
+  getAlbumSaga(),
   watcher(),
 ]

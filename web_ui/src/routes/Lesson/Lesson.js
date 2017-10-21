@@ -54,7 +54,10 @@ const Lesson = ({ lesson = {}, match: { params: { course } }, isNew, sendLesson 
       <Link to={`/${course}`}><Icon name='chevron left' /> Back to course</Link>
     </Label>
     {isNew ?
-      <CreateNewLesson onSubmit={sendLesson} courseId={course} />
+      <CreateNewLesson
+        onSubmit={sendLesson}
+        courseId={course}
+      />
       :
       <Column>
         <Card fluid>

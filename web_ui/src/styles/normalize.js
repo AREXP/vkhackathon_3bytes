@@ -237,7 +237,13 @@ injectGlobal`
 `
 
 injectGlobal`
-  html, body, #react {
+  html, body, #root {
+
+  }
+
+  #root {
+    height: 100%;
+    overflow-y: scroll;
   }
 
   body {

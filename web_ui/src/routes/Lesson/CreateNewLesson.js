@@ -1,7 +1,8 @@
 import React from 'react'
-import { Input, TextArea, Form, Button } from 'semantic-ui-react'
+import { Input, TextArea, Form, Button, Card } from 'semantic-ui-react'
 import { compose, withState, withHandlers } from 'recompose'
 import { withRouter } from 'react-router-dom'
+import QuestionModal from './QuestionModal'
 
 const enhance = compose(
   withRouter,
@@ -18,6 +19,11 @@ const enhance = compose(
         ...state,
         [name]: value,
       })),
+    onAddQuestion: ({ setState }) => (payload) => {
+      setState(state => ({
+        questions: [...state.questions, payload],
+      }))
+    },
     onSubmit: ({ onSubmit, state, history, courseId }) => () => {
       onSubmit(state)
       history.push(`/${courseId}`)
@@ -25,39 +31,26 @@ const enhance = compose(
   }),
 )
 
-// {
-//   "attachments": [
-//     {
-//       "annotation": "string",
-//       "id": 0,
-//       "media": 0,
-//       "owner": 0,
-//       "type": "string"
-//     }
-//   ],
-//   "createdAt": "2017-10-21T04:42:53.175Z",
-//   "description": "string",
-//   "id": 0,
-//   "last": true,
-//   "position": 0,
-//   "questions": [
-//     {
-//       "answers": [
-//         {
-//           "correct": true,
-//           "id": 0,
-//           "value": "string"
-//         }
-//       ],
-//       "id": 0,
-//       "title": "string",
-//       "type": "string"
-//     }
-//   ],
-//   "title": "string"
-// }
+const QuestionPreview = ({ data = [] }) => data.map(({ title, answers }) => (console.log(title, answers),
+  <Card key={title}>
+    <Card.Content>
+      <Card.Header>{title}</Card.Header>
+      <Card.Description>
+        <Card.Meta>Ответы</Card.Meta>
+        <ul>
+          {answers.map(({ value }) => (
+            <li key={value}>
+              {value}
+            </li>
+          ))}
+        </ul>
+      </Card.Description>
+      {`Правельные ответы - ${answers.filter(({ correct }) => correct).map(({ value }) => value).join(', ')}`}
+    </Card.Content>
+  </Card>
+))
 
-const CreateNewLesson = ({ onInput, onSubmit }) => (
+const CreateNewLesson = ({ onInput, onSubmit, onAddQuestion, state }) => (
   <Form onSubmit={onSubmit}>
     <Form.Field
       control={Input}
@@ -71,7 +64,10 @@ const CreateNewLesson = ({ onInput, onSubmit }) => (
       placeholder='Lesson description``'
       onChange={onInput('description')}
     />
-    <Form.Field control={Button}>Submit</Form.Field>
+    {<QuestionPreview data={state.questions} />}
+    <QuestionModal addQuestion={onAddQuestion} />
+    <div style={{ padding: '8px 0' }} />
+    <Form.Field control={Button}>Отправить</Form.Field>
   </Form>
 )
 
