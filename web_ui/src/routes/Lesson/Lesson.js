@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { compose, lifecycle, withProps } from 'recompose'
 import { propEq, find } from 'ramda'
-import { Card, Label, Icon } from 'semantic-ui-react'
+import { Card, Label, Icon, Radio, Form, Segment } from 'semantic-ui-react'
 import { Column } from 'components/Column'
 
 import * as actionCreators from './module'
@@ -22,13 +22,27 @@ const enhance = compose(
     },
   }),
   withProps(({
-    courses: { content },
     match: { params: { course, lesson } },
     lessons,
   }) => ({
-    course: find(propEq('id', Number(course)), content) || {},
     lesson: lessons[`${course}/${lesson}`],
   })),
+)
+
+const Quiz = ({ title, answers = [] }) => (
+  <Card fluid>
+    <Card.Content>
+      <Card.Header>{title}</Card.Header>
+      <Form>
+        {answers.map(({ id, value, correct }) => (
+          <Form.Field key={id}>
+            <label>{value}</label>
+            <Radio checked={correct} toggle />
+          </Form.Field>
+        ))}
+      </Form>
+    </Card.Content>
+  </Card>
 )
 
 const Lesson = ({ lesson, match: { params: { course } } }) => lesson ?
@@ -45,6 +59,9 @@ const Lesson = ({ lesson, match: { params: { course } } }) => lesson ?
         <Card.Description>{lesson.description}</Card.Description>
       </Card.Content>
     </Card>
+    {lesson.questions && lesson.questions.map(props =>
+      <Quiz key={props.id} {...props} />
+    )}
   </Column> : null
 
 export default enhance(Lesson)
