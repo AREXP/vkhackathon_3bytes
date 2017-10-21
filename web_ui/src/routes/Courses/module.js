@@ -7,19 +7,29 @@ const initialState = {
 
 export const getCourses = createAction('getCourses')
 export const fetchCourse = createAction('getCourse')
+export const fetchAllCourses = createAction('fetchAllCourses')
+export const fetchLesson = createAction('getLesson')
+export const setLesson = createAction('setLesson')
 export const setCourse = createAction('setCourse')
+export const sendCourse = createAction('sendCourse')
 
 const reducer = createReducer({
   [getCourses]: (state, payload) => payload,
-  [fetchCourse]: (state) => state,
-  [setCourse]: (state, payload) =>
+  [setLesson]: (state, payload) => {
+    console.log(state, payload)
+    return state
+  },
+  [setCourse]: (state, { course, lessons }) =>
     evolve({
       content: update(
         findIndex(
-          propEq('id', payload.id),
+          propEq('id', course.id),
           state.content,
         ),
-        payload,
+        {
+          ...course,
+          lessons,
+        },
       ),
     }, state),
 }, initialState)

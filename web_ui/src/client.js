@@ -6,7 +6,7 @@ import { Provider } from 'react-redux'
 import createSagaMiddleware from 'redux-saga'
 import logger from 'redux-logger'
 
-import sagas from './routes/Courses/sagas'
+import sagas from './sagas'
 import { App, reducers } from './App'
 
 const sagaMiddleware = createSagaMiddleware()
