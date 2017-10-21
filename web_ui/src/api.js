@@ -46,6 +46,20 @@ export function get(href, options) {
   )
 }
 
+export function remove(href, options) {
+  return request(href, {
+    method: 'DELETE',
+    ...options,
+  }).then(response =>
+    response.json().then(json => ({ json, response })),
+  ).then(
+    ({ json }) => json,
+    error => ({
+      error: error.message || 'Something bad happened',
+    }),
+  )
+}
+
 export function post(href, options) {
   return request(href, {
     method: 'POST',

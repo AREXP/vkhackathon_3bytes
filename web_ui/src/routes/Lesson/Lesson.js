@@ -2,10 +2,10 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { compose, lifecycle, withProps } from 'recompose'
-import { propEq, find } from 'ramda'
-import { Card, Label, Icon, Radio, Form, Segment } from 'semantic-ui-react'
+import { Card, Label, Icon, Radio, Form } from 'semantic-ui-react'
 import { Column } from 'components/Column'
 
+import CreateNewLesson from './CreateNewLesson'
 import * as actionCreators from './module'
 
 const mapStateToProps = ({ courses, lessons }) => ({
@@ -18,7 +18,9 @@ const enhance = compose(
   lifecycle({
     componentWillMount() {
       const { match: { params: { course, lesson } }, fetchLesson } = this.props
-      fetchLesson({ course, lesson })
+      if (lesson !== 'new_lesson') {
+        fetchLesson({ course, lesson })
+      }
     },
   }),
   withProps(({
@@ -26,6 +28,7 @@ const enhance = compose(
     lessons,
   }) => ({
     lesson: lessons[`${course}/${lesson}`],
+    isNew: lesson === 'new_lesson',
   })),
 )
 
@@ -45,23 +48,30 @@ const Quiz = ({ title, answers = [] }) => (
   </Card>
 )
 
-const Lesson = ({ lesson, match: { params: { course } } }) => lesson ?
+const Lesson = ({ lesson = {}, match: { params: { course } }, isNew, sendLesson }) => (
   <Column>
     <Label size='big'>
       <Link to={`/${course}`}><Icon name='chevron left' /> Back to course</Link>
     </Label>
-    <Card fluid>
-      <Card.Content>
-        <Card.Header>{lesson.title}</Card.Header>
-        <Card.Meta>
-          {(new Date(lesson.createdAt * 1e3)).toString()}
-        </Card.Meta>
-        <Card.Description>{lesson.description}</Card.Description>
-      </Card.Content>
-    </Card>
-    {lesson.questions && lesson.questions.map(props =>
-      <Quiz key={props.id} {...props} />
-    )}
-  </Column> : null
+    {isNew ?
+      <CreateNewLesson onSubmit={sendLesson} courseId={course} />
+      :
+      <Column>
+        <Card fluid>
+          <Card.Content>
+            <Card.Header>{lesson.title}</Card.Header>
+            <Card.Meta>
+              {(new Date(lesson.createdAt * 1e3)).toString()}
+            </Card.Meta>
+            <Card.Description>{lesson.description}</Card.Description>
+          </Card.Content>
+        </Card>
+        {lesson.questions && lesson.questions.map(props =>
+          <Quiz key={props.id} {...props} />,
+        )}
+      </Column>
+    }
+  </Column>
+)
 
 export default enhance(Lesson)

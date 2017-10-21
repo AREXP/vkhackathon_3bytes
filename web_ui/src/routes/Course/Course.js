@@ -24,13 +24,14 @@ const enhance = compose(
   withProps(({
     courses: { content },
     match: { params: { course } },
+    deleteLesson,
   }) => ({
     course: find(propEq('id', Number(course)), content) || {},
     isNew: course === 'new_course',
   })),
 )
 
-const LessonPreview = ({ id, title, description, createdAt, courseId }) => (
+const LessonPreview = ({ id, title, description, createdAt, courseId, deleteLesson }) => (
   <Card fluid>
     <Card.Content>
       <Card.Header>
@@ -43,13 +44,28 @@ const LessonPreview = ({ id, title, description, createdAt, courseId }) => (
         {description}
       </Card.Description>
     </Card.Content>
+    <Card.Content extra>
+      <Button onClick={() => deleteLesson({ courseId, id })}>
+        <Icon name='trash' title='delete' /> Delete
+      </Button>
+    </Card.Content>
+  </Card>
+)
+
+const LessonAdd = ({ courseId }) => (
+  <Card fluid>
+    <Card.Content>
+      <Card.Header>
+        <Link to={`/${courseId}/new_lesson`}><Icon name='plus' /> Create new lesson</Link>
+      </Card.Header>
+    </Card.Content>
   </Card>
 )
 
 const Course = ({
   course: {
     id, description, createdAt, title, lessons,
-  }, isNew, sendCourse,
+  }, isNew, sendCourse, deleteLesson,
 }) => (
   <Column>
     <Label size='big'>
@@ -66,8 +82,9 @@ const Course = ({
         </Card.Content>
       </Card>,
       lessons && lessons.content && lessons.content.map(props => (
-        <LessonPreview key={props.id} {...props} courseId={id} />
-      ))
+        <LessonPreview key={props.id} {...props} courseId={id} deleteLesson={deleteLesson} />
+      )),
+      <LessonAdd key='addnew' courseId={id} />
     ]}
   </Column>
 )

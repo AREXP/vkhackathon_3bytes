@@ -3,9 +3,8 @@ import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { compose } from 'recompose'
 import { Column } from 'components/Column'
-import { Card, Radio, Icon } from 'semantic-ui-react'
+import { Card, Radio, Icon, Button, Grid } from 'semantic-ui-react'
 
-import { CoursePreviewWrapper } from './components'
 import * as actionCreators from './module'
 
 const mapStateToProps = ({ courses }) => ({ courses })
@@ -14,7 +13,7 @@ const enhance = compose(
   connect(mapStateToProps, actionCreators),
 )
 
-const CoursePreview = ({ id, title, description, isActive, createdAt }) => (
+const CoursePreview = ({ id, title, description, isActive, createdAt, deleteCourse }) => (
   <Card fluid>
     <Card.Content>
       <Card.Header>
@@ -29,7 +28,18 @@ const CoursePreview = ({ id, title, description, isActive, createdAt }) => (
       <Link to={`/${id}`}>{`View the course`}</Link>
     </Card.Content>
     <Card.Content extra>
-      <Radio checked={isActive} toggle />
+      <Grid columns='equal'>
+        <Grid.Row>
+          <Grid.Column>
+            <Radio checked={isActive} toggle /> <label>Active course</label>
+          </Grid.Column>
+          <Grid.Column>
+            <Button onClick={() => deleteCourse(id)}>
+              <Icon name='trash' />Delete
+            </Button>
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
     </Card.Content>
   </Card>
 )
@@ -44,10 +54,10 @@ const CourseAdd = () => (
   </Card>
 )
 
-const Courses = ({ courses: { content } }) => (
+const Courses = ({ courses: { content = [] }, deleteCourse }) => (
   <Column marginBetween='XS'>
     {content.map(props =>
-      <CoursePreview key={props.id} {...props} />,
+      <CoursePreview key={props.id} {...props} deleteCourse={deleteCourse} />,
     )}
     <CourseAdd />
   </Column>

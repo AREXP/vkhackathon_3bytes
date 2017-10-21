@@ -1,6 +1,6 @@
 import { put, call, takeEvery } from 'redux-saga/effects'
-import { get, vkGet } from '../../api'
-import { getCourses, setCourse, fetchCourse, fetchLesson, fetchAllCourses } from './module'
+import { get, vkGet, remove } from '../../api'
+import { getCourses, setCourse, fetchCourse, fetchAllCourses, deleteCourse } from './module'
 
 export function* fetchAllCoursesSaga() {
   const result = yield call(get, 'courses')
@@ -18,9 +18,15 @@ export function* getAlbumSaga() {
   console.log(result)
 }
 
+export function* deleteCourseSaga({ payload }) {
+  yield call(remove, `courses/${payload}`)
+  yield put(fetchAllCourses())
+}
+
 function* watcher() {
   yield takeEvery(fetchCourse, fetchCourseSaga)
   yield takeEvery(fetchAllCourses, fetchAllCoursesSaga)
+  yield takeEvery(deleteCourse, deleteCourseSaga)
 }
 
 export default [

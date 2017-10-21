@@ -12,6 +12,8 @@ export const fetchLesson = createAction('getLesson')
 export const setLesson = createAction('setLesson')
 export const setCourse = createAction('setCourse')
 export const sendCourse = createAction('sendCourse')
+export const deleteLesson = createAction('deleteLesson')
+export const deleteCourse = createAction('deleteCourse')
 
 const reducer = createReducer({
   [getCourses]: (state, payload) => payload,
