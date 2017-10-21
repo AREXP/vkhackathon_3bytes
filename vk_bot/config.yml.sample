@@ -1,20 +1,22 @@
 commands:
-    /start: 'start command'
-    /help: 'help command'
-    /show_courses: 'all courses'
-    /take_course: 'take course'
-    /next: 'next step'
-    /prev: 'prev step'
-    /answer: 'отправка ответа на тест'
-    /progress: 'Прогресс текущего курса'
-    /full_progress: 'Прогресс всех курсов'
+    /start: 'Start command'
+    /help: 'Help command'
+    /show_courses: 'All courses'
+    /take_course: 'Take course'
+    /next: 'Next step'
+    /prev: 'Prev step'
+    /answer: 'Send quiz question'
+    /progress: 'Courses progress'
     /leave: 'Leave this course for now'
     /delete: 'Delete the course from user course list'
+    /overview: 'Show course plan'
+    /comment: 'Leave a course review'
+
 
 VK:
-    TOKEN: ''
+    TOKEN: 'e89dd08034ef28ac5af89a15d471acfdbfe3edb92c3283cdad7cfed3788935b3aea34681b33c092f8ebfa'
     PATH: 'https://api.vk.com/method/'
+    API_VERSION: '5.68'
 
 API:
-    SERVER: 'localhost'
-    PORT: 9090
+    PATH: 'http://172.19.245.10:8081'
