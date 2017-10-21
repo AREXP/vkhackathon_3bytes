@@ -24,9 +24,8 @@ const enhance = compose(
   withProps(({
     courses: { content },
     match: { params: { course } },
-    deleteLesson,
   }) => ({
-    course: find(propEq('id', Number(course)), content) || {},
+    course: content && find(propEq('id', Number(course)), content) || {},
     isNew: course === 'new_course',
   })),
 )
