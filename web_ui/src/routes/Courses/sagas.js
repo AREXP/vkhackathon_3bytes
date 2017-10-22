@@ -13,11 +13,6 @@ export function* fetchCourseSaga({ payload }) {
   yield put(setCourse({ course, lessons }))
 }
 
-export function* getAlbumSaga() {
-  const result = yield call(vkapi, { method: 'users.get' })
-  console.log(result)
-}
-
 export function* deleteCourseSaga({ payload }) {
   yield call(remove, `courses/${payload}`)
   yield put(fetchAllCourses())
@@ -31,6 +26,5 @@ function* watcher() {
 
 export default [
   fetchAllCoursesSaga(),
-  getAlbumSaga(),
   watcher(),
 ]

@@ -54,7 +54,7 @@ const enhance = compose(
 )
 
 const ModalAddNew = ({ onInput, openModal, closeModal, onSubmit, modal }) => (
-  <Modal open={modal} trigger={<Button onClick={openModal}>Добавить вопрос</Button>}>
+  <Modal open={modal} onClose={closeModal} trigger={<Button onClick={openModal}>Добавить вопрос</Button>}>
     <Modal.Header>Добавить вопрос</Modal.Header>
     <Modal.Content>
       <Modal.Description>

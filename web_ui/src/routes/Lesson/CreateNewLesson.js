@@ -3,6 +3,8 @@ import { Input, TextArea, Form, Button, Card } from 'semantic-ui-react'
 import { compose, withState, withHandlers } from 'recompose'
 import { withRouter } from 'react-router-dom'
 import QuestionModal from './QuestionModal'
+import Attachments from './Attachments'
+import TextAttachments from './TextAttachments'
 
 const enhance = compose(
   withRouter,
@@ -21,7 +23,15 @@ const enhance = compose(
       })),
     onAddQuestion: ({ setState }) => (payload) => {
       setState(state => ({
+        ...state,
         questions: [...state.questions, payload],
+      }))
+    },
+    onAddAttachment: ({ setState }) => (payload) => {
+      console.log(payload)
+      setState(state => ({
+        ...state,
+        attachments: [...state.attachments, payload],
       }))
     },
     onSubmit: ({ onSubmit, state, history, courseId }) => () => {
@@ -31,7 +41,7 @@ const enhance = compose(
   }),
 )
 
-const QuestionPreview = ({ data = [] }) => data.map(({ title, answers }) => (console.log(title, answers),
+const QuestionPreview = ({ data = [] }) => data.map(({ title, answers }) => (
   <Card key={title}>
     <Card.Content>
       <Card.Header>{title}</Card.Header>
@@ -50,7 +60,7 @@ const QuestionPreview = ({ data = [] }) => data.map(({ title, answers }) => (con
   </Card>
 ))
 
-const CreateNewLesson = ({ onInput, onSubmit, onAddQuestion, state }) => (
+const CreateNewLesson = ({ onInput, onSubmit, onAddQuestion, onAddAttachment, state, lessons }) => (
   <Form onSubmit={onSubmit}>
     <Form.Field
       control={Input}
@@ -63,6 +73,13 @@ const CreateNewLesson = ({ onInput, onSubmit, onAddQuestion, state }) => (
       label='Description'
       placeholder='Lesson description``'
       onChange={onInput('description')}
+    />
+    <Attachments
+      lessons={lessons}
+      addAttachment={onAddAttachment}
+    />
+    <TextAttachments
+      addAttachment={onAddAttachment}
     />
     {<QuestionPreview data={state.questions} />}
     <QuestionModal addQuestion={onAddQuestion} />

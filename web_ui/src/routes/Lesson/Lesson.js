@@ -48,7 +48,7 @@ const Quiz = ({ title, answers = [] }) => (
   </Card>
 )
 
-const Lesson = ({ lesson = {}, match: { params: { course } }, isNew, sendLesson }) => (
+const Lesson = ({ lesson = {}, match: { params: { course } }, isNew, sendLesson, lessons }) => (
   <Column>
     <Label size='big'>
       <Link to={`/${course}`}><Icon name='chevron left' /> Back to course</Link>
@@ -57,6 +57,7 @@ const Lesson = ({ lesson = {}, match: { params: { course } }, isNew, sendLesson 
       <CreateNewLesson
         onSubmit={sendLesson}
         courseId={course}
+        lessons={lessons}
       />
       :
       <Column>
