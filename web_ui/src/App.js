@@ -8,6 +8,7 @@ import {
 import styled from 'react-emotion'
 import { padding } from 'styles/palette'
 import { Course } from './routes/Course'
+import { CSSTransitionGroup } from 'react-transition-group'
 import { Lesson, reducer as lessons } from './routes/Lesson'
 import { Courses, reducer as courses } from './routes/Courses'
 import StartScreen from './routes/StartScreen'

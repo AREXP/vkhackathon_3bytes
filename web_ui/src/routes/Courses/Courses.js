@@ -31,7 +31,7 @@ const CoursePreview = ({ id, title, description, isActive, createdAt, deleteCour
       <Grid columns='equal'>
         <Grid.Row>
           <Grid.Column style={{ paddingTop: '6px' }}>
-            <Radio checked={isActive} label={'Курс активен'} toggle />
+            <Radio checked={!isActive} label={`Курс ${!isActive ? '' : 'не'}активен`} toggle />
           </Grid.Column>
           <Grid.Column style={{ textAlign: 'right' }}>
             <Button onClick={() => deleteCourse(id)} animated='vertical'>
@@ -57,7 +57,7 @@ const CourseAdd = () => (
   </Card>
 )
 
-const Courses = ({ courses: { content, coursesLoading }, deleteCourse }) => (console.log(content),
+const Courses = ({ courses: { content, coursesLoading }, deleteCourse }) => (
   <Column marginBetween='XS'>
     {content && content.map(props =>
       <CoursePreview key={props.id} {...props} deleteCourse={deleteCourse} />,

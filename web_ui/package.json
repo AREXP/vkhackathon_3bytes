@@ -36,6 +36,7 @@
     "react-jsonschema-form": "0.51.0",
     "react-redux": "5.0.6",
     "react-router-dom": "4.2.2",
+    "react-transition-group": "2.2.1",
     "recompose": "0.26.0",
     "redux": "3.7.2",
     "redux-act": "1.4.1",

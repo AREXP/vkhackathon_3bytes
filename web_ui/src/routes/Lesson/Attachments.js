@@ -14,17 +14,18 @@ const enhance = compose(
         [name]: value,
       }))
     },
-    onSubmit: ({ state, addAttachment }) => (media, owner) => {
-      console.log(state)
-      console.log(media, owner)
+    onSubmit: ({ setModal, state: { annotation = '' }, addAttachment }) => (photo, owner, media) => {
+      addAttachment({
+        annotation,
+        owner,
+        photo,
+        media,
+        type: 'photo',
+      })
+      setModal(false)
     },
   }),
 )
-
-// "annotation": "string",
-// "media": 0,
-// "owner": 0,
-// "type": "string"
 
 const Attachments = ({ openModal, closeModal, modal, onInput, lessons = {}, onSubmit }) => (
   <Modal
@@ -47,12 +48,12 @@ const Attachments = ({ openModal, closeModal, modal, onInput, lessons = {}, onSu
     <Modal.Header>Нажмите чтобы выбрать</Modal.Header>
     <Modal.Content>
       <Image.Group size='small'>
-        {lessons.photos && lessons.photos.items && lessons.photos.items.map(({ photo_604, owner_id }) => (
+        {lessons.photos && lessons.photos.items && lessons.photos.items.map(({ photo_604, owner_id, id }) => (
           <Image
             src={photo_604}
             key={photo_604}
             style={{ cursor: 'pointer' }}
-            onClick={() => onSubmit(photo_604, owner_id)}
+            onClick={() => onSubmit(photo_604, owner_id, id)}
           />
         ))}
       </Image.Group>

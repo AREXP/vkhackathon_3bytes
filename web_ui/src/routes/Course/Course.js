@@ -41,7 +41,12 @@ const LessonPreview = ({ id, title, description, createdAt, courseId, deleteLess
         {(new Date(createdAt)).toLocaleString()}
       </Card.Meta>
       <Card.Description>
-        {description}
+        {typeof description === 'string' &&
+          (description.length >= 160 ?
+            `${description.slice(0, 160)}...` :
+            description
+          )
+        }
       </Card.Description>
     </Card.Content>
     <Card.Content extra style={{ textAlign: 'right' }}>

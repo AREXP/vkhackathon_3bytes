@@ -2,8 +2,9 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { compose, lifecycle, withProps } from 'recompose'
-import { Card, Label, Icon, Radio, Form, Segment, Dimmer, Loader } from 'semantic-ui-react'
+import { Card, Label, Icon, Radio, Form, Segment, Dimmer, Loader, Image, Header } from 'semantic-ui-react'
 import { Column } from 'components/Column'
+import QuestionPreview from './QuestionPreview'
 
 import CreateNewLesson from './CreateNewLesson'
 import * as actionCreators from './module'
@@ -78,9 +79,16 @@ const Lesson = ({ lesson = {}, match: { params: { course } }, isNew, sendLesson,
             </Card.Content>
           }
         </Card>
-        {lesson.questions && lesson.questions.map(props =>
-          <Quiz key={props.id} {...props} />,
-        )}
+        {lesson.attachments &&
+          <Image.Group size='small'>
+            {lesson.attachments.map(
+              ({ media, type, owner }) =>
+                <Image key={media} src={lessons.photos.items.find(({ id }) => id === media).photo_604} />,
+            )}
+          </Image.Group>
+        }
+        <Header>Вопросы к занятию</Header>
+        {lesson && <QuestionPreview data={lesson.questions} />}
       </Column>
     }
   </Column>
