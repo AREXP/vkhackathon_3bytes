@@ -63,7 +63,7 @@ def main():
             message = prepare_lesson(resp['body'])
             if resp['body']['attachments']:
                 attachments = ','.join([
-                    '{}-{}_{}'.format(obj['type'], abs(obj['owner']), obj['media'])
+                    '{}-{}_{}'.format(obj['type'], abs(int(obj['owner'])), obj['media'])
                     for obj in resp['body']['attachments']
                 ])
             api.update_state(resp['course_id'], resp['lesson_id'])
