@@ -20,22 +20,25 @@ const CoursePreview = ({ id, title, description, isActive, createdAt, deleteCour
         <Link to={`/${id}`}>{title}</Link>
       </Card.Header>
       <Card.Meta>
-        {(new Date(createdAt * 1e3)).toString()}
+        {(new Date(createdAt)).toLocaleString()}
       </Card.Meta>
       <Card.Description>
         {description}
       </Card.Description>
-      <Link to={`/${id}`}>{`View the course`}</Link>
+      <Link to={`/${id}`}>{`Посмотреть курс ...`}</Link>
     </Card.Content>
     <Card.Content extra>
       <Grid columns='equal'>
         <Grid.Row>
-          <Grid.Column>
-            <Radio checked={isActive} toggle /> <label>Active course</label>
+          <Grid.Column style={{ paddingTop: '6px' }}>
+            <Radio checked={isActive} label={'Курс активен'} toggle />
           </Grid.Column>
-          <Grid.Column>
-            <Button onClick={() => deleteCourse(id)}>
-              <Icon name='trash' />Delete
+          <Grid.Column style={{ textAlign: 'right' }}>
+            <Button onClick={() => deleteCourse(id)} animated='vertical'>
+              <Button.Content hidden>Удалить</Button.Content>
+              <Button.Content visible>
+                <Icon name='trash' />
+              </Button.Content>
             </Button>
           </Grid.Column>
         </Grid.Row>
@@ -48,7 +51,7 @@ const CourseAdd = () => (
   <Card fluid>
     <Card.Content>
       <Card.Header>
-        <Link to={`/new_course`}><Icon name='plus' /> Create new course</Link>
+        <Link to={`/new_course`}><Icon name='plus' /> Создать новый курс</Link>
       </Card.Header>
     </Card.Content>
   </Card>

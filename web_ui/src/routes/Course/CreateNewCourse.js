@@ -20,17 +20,17 @@ const CreateNewCourse = ({ onInput, onSubmit }) => (
   <Form onSubmit={onSubmit}>
     <Form.Field
       control={Input}
-      label='Title'
-      placeholder='Course name'
+      label='Заголовок'
+      placeholder='Введите заголовок'
       onChange={onInput('title')}
     />
     <Form.Field
       control={TextArea}
-      label='Description'
-      placeholder='Course name'
+      label='Описание'
+      placeholder='Введите описание курса'
       onChange={onInput('description')}
     />
-    <Form.Field control={Button}>Submit</Form.Field>
+    <Form.Field control={Button}>Добавить курс</Form.Field>
   </Form>
 )
 

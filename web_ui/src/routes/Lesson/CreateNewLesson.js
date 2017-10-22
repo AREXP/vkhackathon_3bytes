@@ -1,6 +1,7 @@
 import React from 'react'
 import { Input, TextArea, Form, Button, Card } from 'semantic-ui-react'
 import { compose, withState, withHandlers } from 'recompose'
+import { Column } from 'components/Column'
 import { withRouter } from 'react-router-dom'
 import QuestionModal from './QuestionModal'
 import Attachments from './Attachments'
@@ -64,25 +65,29 @@ const CreateNewLesson = ({ onInput, onSubmit, onAddQuestion, onAddAttachment, st
   <Form onSubmit={onSubmit}>
     <Form.Field
       control={Input}
-      label='Title'
-      placeholder='Lesson title'
+      label='Название занятия'
+      placeholder='Введите название'
       onChange={onInput('title')}
     />
     <Form.Field
       control={TextArea}
-      label='Description'
-      placeholder='Lesson description``'
+      label='Описание'
+      placeholder='Введите описание занятия и его краткое содержание'
       onChange={onInput('description')}
     />
-    <Attachments
-      lessons={lessons}
-      addAttachment={onAddAttachment}
-    />
-    <TextAttachments
-      addAttachment={onAddAttachment}
-    />
-    {<QuestionPreview data={state.questions} />}
-    <QuestionModal addQuestion={onAddQuestion} />
+    <Column>
+      <Attachments
+        lessons={lessons}
+        addAttachment={onAddAttachment}
+      />
+      <div style={{ padding: '8px 0' }} />
+      <TextAttachments
+        addAttachment={onAddAttachment}
+      />
+      <div style={{ padding: '8px 0' }} />
+      {<QuestionPreview data={state.questions} />}
+      <QuestionModal addQuestion={onAddQuestion} />
+    </Column>
     <div style={{ padding: '8px 0' }} />
     <Form.Field control={Button}>Отправить</Form.Field>
   </Form>

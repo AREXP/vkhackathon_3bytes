@@ -247,7 +247,7 @@ injectGlobal`
   }
 
   body {
-    font-size: 16px;
+    font-size: 12px;
     font-family: sans-serif;
     background-color: ${palette.semiWhite};
     color: ${palette.semiBlack};

@@ -51,7 +51,7 @@ const Quiz = ({ title, answers = [] }) => (
 const Lesson = ({ lesson = {}, match: { params: { course } }, isNew, sendLesson, lessons }) => (
   <Column>
     <Label size='big'>
-      <Link to={`/${course}`}><Icon name='chevron left' /> Back to course</Link>
+      <Link to={`/${course}`}><Icon name='chevron left' /> Вернуться к курсу</Link>
     </Label>
     {isNew ?
       <CreateNewLesson
@@ -65,7 +65,7 @@ const Lesson = ({ lesson = {}, match: { params: { course } }, isNew, sendLesson,
           <Card.Content>
             <Card.Header>{lesson.title}</Card.Header>
             <Card.Meta>
-              {(new Date(lesson.createdAt * 1e3)).toString()}
+              {(new Date(lesson.createdAt)).toLocaleString()}
             </Card.Meta>
             <Card.Description>{lesson.description}</Card.Description>
           </Card.Content>

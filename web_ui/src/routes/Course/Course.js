@@ -37,15 +37,18 @@ const LessonPreview = ({ id, title, description, createdAt, courseId, deleteLess
         <Link to={`/${courseId}/${id}`}>{title}</Link>
       </Card.Header>
       <Card.Meta>
-        {(new Date(createdAt * 1e3)).toString()}
+        {(new Date(createdAt)).toLocaleString()}
       </Card.Meta>
       <Card.Description>
         {description}
       </Card.Description>
     </Card.Content>
-    <Card.Content extra>
-      <Button onClick={() => deleteLesson({ courseId, id })}>
-        <Icon name='trash' title='delete' /> Delete
+    <Card.Content extra style={{ textAlign: 'right' }}>
+      <Button onClick={() => deleteLesson({ courseId, id })} animated='vertical'>
+        <Button.Content hidden>Удалить</Button.Content>
+        <Button.Content visible>
+          <Icon name='trash' />
+        </Button.Content>
       </Button>
     </Card.Content>
   </Card>
@@ -55,7 +58,7 @@ const LessonAdd = ({ courseId }) => (
   <Card fluid>
     <Card.Content>
       <Card.Header>
-        <Link to={`/${courseId}/new_lesson`}><Icon name='plus' /> Create new lesson</Link>
+        <Link to={`/${courseId}/new_lesson`}><Icon name='plus' /> Создать новое занятие</Link>
       </Card.Header>
     </Card.Content>
   </Card>
@@ -68,14 +71,14 @@ const Course = ({
 }) => (
   <Column>
     <Label size='big'>
-      <Link to='/'><Icon name='chevron left' /> All courses</Link>
+      <Link to='/'><Icon name='chevron left' /> Вернутся к курсам</Link>
     </Label>
     {isNew ? <CreateNewCourse onSubmit={sendCourse} /> : [
       <Card fluid key='card'>
         <Card.Content>
           <Card.Header>{title}</Card.Header>
           <Card.Meta>
-            {(new Date(createdAt * 1e3)).toString()}
+            {(new Date(createdAt)).toLocaleString()}
           </Card.Meta>
           <Card.Description>{description}</Card.Description>
         </Card.Content>

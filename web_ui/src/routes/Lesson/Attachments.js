@@ -37,6 +37,7 @@ const Attachments = ({ openModal, closeModal, modal, onInput, lessons = {}, onSu
   >
     <Modal.Header>Добавить материал</Modal.Header>
     <Modal.Content>
+      <label>Добавить аннотацию</label>
       <Input
         placeholder='Аннотация'
         onChange={onInput('annotation')}
