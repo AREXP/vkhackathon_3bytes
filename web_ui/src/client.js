@@ -5,14 +5,8 @@ import { createStore, applyMiddleware, combineReducers } from 'redux'
 import { Provider } from 'react-redux'
 import createSagaMiddleware from 'redux-saga'
 import logger from 'redux-logger'
-import { login } from './api'
 import sagas from './sagas'
 import { App, reducers } from './App'
-import { getParams } from './utils'
-
-console.log(
-  getParams(document.location.hash),
-)
 
 const sagaMiddleware = createSagaMiddleware()
 
@@ -38,12 +32,6 @@ const render = () => {
 }
 
 render()
-// if (document.location.hash && getParams(document.location.hash).access_token) {
-//   render()
-//   console.log(getParams(document.location.hash))
-// } else {
-//   login()
-// }
 
 if (module.hot) {
   module.hot.accept(() => {
