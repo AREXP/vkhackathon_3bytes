@@ -2,8 +2,8 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { compose, lifecycle, withProps } from 'recompose'
-import { propEq, find, toString } from 'ramda'
-import { Card, Radio, Label, Icon, Input, TextArea, Form, Button } from 'semantic-ui-react'
+import { propEq, find } from 'ramda'
+import { Card, Label, Icon, Button, Segment, Dimmer, Loader } from 'semantic-ui-react'
 import { Column } from 'components/Column'
 import CreateNewCourse from './CreateNewCourse'
 
@@ -71,7 +71,7 @@ const Course = ({
 }) => (
   <Column>
     <Label size='big'>
-      <Link to='/'><Icon name='chevron left' /> Вернутся к курсам</Link>
+      <Link to='/'><Icon name='chevron left' /> Вернуться к курсам</Link>
     </Label>
     {isNew ? <CreateNewCourse onSubmit={sendCourse} /> : [
       <Card fluid key='card'>
@@ -83,7 +83,13 @@ const Course = ({
           <Card.Description>{description}</Card.Description>
         </Card.Content>
       </Card>,
-      lessons && lessons.content && lessons.content.map(props => (
+      !lessons ?
+        <Segment style={{ height: '100px' }}>
+          <Dimmer active inverted>
+            <Loader inverted>Загрузка</Loader>
+          </Dimmer>
+        </Segment>
+      : lessons.content && lessons.content.map(props => (
         <LessonPreview key={props.id} {...props} courseId={id} deleteLesson={deleteLesson} />
       )),
       <LessonAdd key='addnew' courseId={id} />

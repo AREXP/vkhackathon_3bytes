@@ -1,6 +1,6 @@
 import React from 'react'
 import { compose, withState, withHandlers } from 'recompose'
-import { Button, Modal, Image, Input, Divider } from 'semantic-ui-react'
+import { Button, Modal, Image, Input, Divider, Header } from 'semantic-ui-react'
 
 const enhance = compose(
   withState('state', 'setState', {}),
@@ -37,13 +37,14 @@ const Attachments = ({ openModal, closeModal, modal, onInput, lessons = {}, onSu
   >
     <Modal.Header>Добавить материал</Modal.Header>
     <Modal.Content>
-      <label>Добавить аннотацию</label>
+      <Header>Добавить аннотацию</Header>
       <Input
         placeholder='Аннотация'
         onChange={onInput('annotation')}
       />
     </Modal.Content>
     <Divider />
+    <Modal.Header>Нажмите чтобы выбрать</Modal.Header>
     <Modal.Content>
       <Image.Group size='small'>
         {lessons.photos && lessons.photos.items && lessons.photos.items.map(({ photo_604, owner_id }) => (

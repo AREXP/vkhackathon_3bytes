@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { compose } from 'recompose'
 import { Column } from 'components/Column'
-import { Card, Radio, Icon, Button, Grid } from 'semantic-ui-react'
+import { Card, Radio, Icon, Button, Grid, Segment, Dimmer, Loader } from 'semantic-ui-react'
 
 import * as actionCreators from './module'
 
@@ -57,11 +57,18 @@ const CourseAdd = () => (
   </Card>
 )
 
-const Courses = ({ courses: { content = [] }, deleteCourse }) => (
+const Courses = ({ courses: { content }, deleteCourse }) => (console.log(content),
   <Column marginBetween='XS'>
-    {content.map(props =>
+    {content && content.map(props =>
       <CoursePreview key={props.id} {...props} deleteCourse={deleteCourse} />,
     )}
+    {!content &&
+      <Segment style={{ height: '100px' }}>
+        <Dimmer active inverted>
+          <Loader inverted>Загрузка</Loader>
+        </Dimmer>
+      </Segment>
+    }
     <CourseAdd />
   </Column>
 )

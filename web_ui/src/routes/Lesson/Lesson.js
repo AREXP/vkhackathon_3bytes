@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { compose, lifecycle, withProps } from 'recompose'
-import { Card, Label, Icon, Radio, Form } from 'semantic-ui-react'
+import { Card, Label, Icon, Radio, Form, Segment, Dimmer, Loader } from 'semantic-ui-react'
 import { Column } from 'components/Column'
 
 import CreateNewLesson from './CreateNewLesson'
@@ -62,13 +62,21 @@ const Lesson = ({ lesson = {}, match: { params: { course } }, isNew, sendLesson,
       :
       <Column>
         <Card fluid>
-          <Card.Content>
-            <Card.Header>{lesson.title}</Card.Header>
-            <Card.Meta>
-              {(new Date(lesson.createdAt)).toLocaleString()}
-            </Card.Meta>
-            <Card.Description>{lesson.description}</Card.Description>
-          </Card.Content>
+          {!lesson.title ?
+            <Segment style={{ height: '100px' }}>
+              <Dimmer active inverted>
+                <Loader inverted>Загрузка</Loader>
+              </Dimmer>
+            </Segment>
+            :
+            <Card.Content>
+              <Card.Header>{lesson.title}</Card.Header>
+              <Card.Meta>
+                {(new Date(lesson.createdAt)).toLocaleString()}
+              </Card.Meta>
+              <Card.Description>{lesson.description}</Card.Description>
+            </Card.Content>
+          }
         </Card>
         {lesson.questions && lesson.questions.map(props =>
           <Quiz key={props.id} {...props} />,

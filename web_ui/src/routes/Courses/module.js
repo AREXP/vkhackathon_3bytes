@@ -2,7 +2,7 @@ import { createAction, createReducer } from 'redux-act'
 import { update, evolve, findIndex, propEq } from 'ramda'
 
 const initialState = {
-  content: [],
+  content: null,
 }
 
 export const getCourses = createAction('getCourses')
@@ -18,7 +18,6 @@ export const deleteCourse = createAction('deleteCourse')
 const reducer = createReducer({
   [getCourses]: (state, payload) => payload,
   [setLesson]: (state, payload) => {
-    console.log(state, payload)
     return state
   },
   [setCourse]: (state, { course, lessons }) =>
