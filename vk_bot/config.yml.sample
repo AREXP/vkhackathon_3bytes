@@ -1,17 +1,15 @@
 commands:
-    /start: 'Start command'
-    /help: 'Help command'
-    /show_courses: 'All courses'
-    /take_course: 'Take course'
-    /next: 'Next step'
-    /prev: 'Prev step'
-    /answer: 'Send quiz question'
-    /progress: 'Courses progress'
-    /leave: 'Leave this course for now'
-    /delete: 'Delete the course from user course list'
-    /overview: 'Show course plan'
-    /comment: 'Leave a course review'
-
+    /start: 'Приветственное сообщение с кратким описанием платформы'
+    /help: 'Вывод данной подсказки со списком комманд'
+    /show_courses: 'Список всех доступных курсов'
+    /take_course: 'Начать курс'
+    /next: 'Следующий шаг'
+    /prev: 'Предыдущий шаг'
+    # /answer: 'Выбрать варианты ответа'
+    /progress: 'Прогресс студента по всем курсам'
+    # /delete: 'Delete the course from user course list'
+    /overview: 'Посмотреть план курса'
+    /comment: 'Оставить комментарий к курсу, возможно после завершения'
 
 VK:
     TOKEN: 'e89dd08034ef28ac5af89a15d471acfdbfe3edb92c3283cdad7cfed3788935b3aea34681b33c092f8ebfa'
@@ -19,4 +17,4 @@ VK:
     API_VERSION: '5.68'
 
 API:
-    PATH: 'http://172.19.245.10:8081'
+    PATH: 'http://92.53.102.66:8080'

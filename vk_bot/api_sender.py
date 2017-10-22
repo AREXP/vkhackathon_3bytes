@@ -11,6 +11,7 @@ class APISender(object):
 
     def get_courses(self):
         courses_list = self._get('courses', {'onlyActive': 1})['content']
+        courses_list = self._get('courses')['content']
         return [
             (course['id'], unicode(course['title'])) for course in courses_list
         ]
@@ -37,7 +38,10 @@ class APISender(object):
             json = self._get(path, {'courseId': resp['course_id']})
             print 'json', json
             resp['body'] = json
-            resp['do_update'] = json['isFirst'] or json['isLast']
+            if json['isFirst']:
+                resp['do_update'] = 1
+            elif json['isLast']:
+                resp['do_update'] = 2
         else:
             resp['body'] = 'Извините, у вас нет начатых курсов'
             resp['do_update'] = False
@@ -46,14 +50,19 @@ class APISender(object):
 
     def get_lesson(self, course_id):
         course_id = int(course_id)
-        json = self._get('user-states/{}'.format(self.user_id))
-        print 'in get lessons', json
         resp = {
             'body': '',
             'course_id': 0,
             'lesson_id': 0,
             'do_update': True
         }
+        available_courses = [c_id for c_id, _ in self.get_courses()]
+        if course_id not in available_courses:
+            resp['body'] = 'Неизвестный номер курса'
+            print 'unknown', resp
+            return resp
+        json = self._get('user-states/{}'.format(self.user_id))
+        print 'in get lessons', json
 
         if json['content']:
             courses = json['content']
@@ -88,6 +97,9 @@ class APISender(object):
         return titles
 
     def update_state(self, course_id, lesson_id):
+        if not(course_id and lesson_id):
+            return
+        print 'update_state'
         payload = {
             'course': {'id': course_id},
             'lesson': {'id': lesson_id},
@@ -122,7 +134,28 @@ class APISender(object):
             lines[0] += ' (Текущий)'
             return lines
         else:
-            return ('У вас нет начатых курсов')
+            return ('У вас нет начатых курсов:( Начните, введя команду "/show_courses"')
+
+    def send_quiz(self, args):
+        json = self._get('user-states/{}'.format(self.user_id))
+        print 'JSON', json
+        if json['content']:
+            last_course = sorted(
+                json['content'], key=lambda state: state['updatedAt'],
+            )[-1]
+            lesson = last_course['lesson']['id']
+            lesson = self._get('lessons/{}'.format(lesson))['content']
+            question = lesson['questions'][0]
+            correct_answers = {
+                num for num, answer in enumerate(question['answers'])
+                if answer['correct']
+            }
+            parsed = sorted(set(map(int, args.split())))
+            if parsed == correct_answers:
+                return 'Правильный ответ'
+            else:
+                return 'Неправильный ответ'
+        return 'Неправильный ответ'
 
     def _get(self, method, payload=None, ret_status=None):
         path = '{}/{}'.format(self.host, method)
