@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+from __future__ import unicode_literals
 import requests
 
 
@@ -18,10 +19,11 @@ class VKSender(object):
             payload['message'] = message
         if attachments is not None:
             payload['attachment'] = attachments
-        print payload
+        print 'PAYLOAD', payload
         self._get('messages.send', payload)
 
     def _get(self, method, params):
         path = '{}/{}'.format(self.host, method)
-        requests.get(path, params=params)
+        resp = requests.get(path, params=params)
+        print resp.status_code, resp.text, resp.url
         return 'ok'
