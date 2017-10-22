@@ -1,12 +1,14 @@
 import { createAction, createReducer } from 'redux-act'
-import { update, evolve, findIndex, propEq } from 'ramda'
+import { update, evolve, findIndex, propEq, always } from 'ramda'
 
 const initialState = {
+  coursesLoading: false,
+  courseLoading: false,
   content: null,
 }
 
 export const getCourses = createAction('getCourses')
-export const fetchCourse = createAction('getCourse')
+export const fetchCourse = createAction('fetchCourse')
 export const fetchAllCourses = createAction('fetchAllCourses')
 export const fetchLesson = createAction('getLesson')
 export const setLesson = createAction('setLesson')
@@ -16,10 +18,10 @@ export const deleteLesson = createAction('deleteLesson')
 export const deleteCourse = createAction('deleteCourse')
 
 const reducer = createReducer({
-  [getCourses]: (state, payload) => payload,
-  [setLesson]: (state, payload) => {
-    return state
-  },
+  [fetchAllCourses]: (state) => ({ ...state, coursesLoading: true }),
+  [getCourses]: (state, payload) => ({ ...state, ...payload, coursesLoading: false }),
+  [fetchCourse]: (state) => ({ ...state, courseLoading: true }),
+  [setLesson]: (state) => state,
   [setCourse]: (state, { course, lessons }) =>
     evolve({
       content: update(
@@ -32,6 +34,7 @@ const reducer = createReducer({
           lessons,
         },
       ),
+      courseLoading: always(false),
     }, state),
 }, initialState)
 

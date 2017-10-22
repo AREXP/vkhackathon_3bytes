@@ -238,12 +238,13 @@ injectGlobal`
 
 injectGlobal`
   html, body, #root {
-
+    overflow-x: hidden;
   }
 
   #root {
     height: 100%;
-    overflow-y: scroll;
+    overflow-y: auto;
+    overflow-x: hidden;
   }
 
   body {

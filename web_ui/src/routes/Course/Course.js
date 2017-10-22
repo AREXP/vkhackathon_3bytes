@@ -22,11 +22,12 @@ const enhance = compose(
     },
   }),
   withProps(({
-    courses: { content },
+    courses: { content, courseLoading },
     match: { params: { course } },
   }) => ({
     course: content && find(propEq('id', Number(course)), content) || {},
     isNew: course === 'new_course',
+    courseLoading,
   })),
 )
 
@@ -66,7 +67,7 @@ const LessonAdd = ({ courseId }) => (
 
 const Course = ({
   course: {
-    id, description, createdAt, title, lessons,
+    id, description, createdAt, title, lessons, courseLoading,
   }, isNew, sendCourse, deleteLesson,
 }) => (
   <Column>
@@ -83,15 +84,20 @@ const Course = ({
           <Card.Description>{description}</Card.Description>
         </Card.Content>
       </Card>,
-      !lessons ?
-        <Segment style={{ height: '100px' }}>
+      lessons && lessons.content && lessons.content.map(props => (
+        <LessonPreview
+          key={props.id}
+          {...props}
+          courseId={id}
+          deleteLesson={deleteLesson}
+        />
+      )),
+      courseLoading || !lessons ?
+        <Segment key='preloader' style={{ height: '100px' }}>
           <Dimmer active inverted>
             <Loader inverted>Загрузка</Loader>
           </Dimmer>
-        </Segment>
-      : lessons.content && lessons.content.map(props => (
-        <LessonPreview key={props.id} {...props} courseId={id} deleteLesson={deleteLesson} />
-      )),
+        </Segment> : null,
       <LessonAdd key='addnew' courseId={id} />
     ]}
   </Column>

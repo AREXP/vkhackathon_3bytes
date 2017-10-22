@@ -57,12 +57,12 @@ const CourseAdd = () => (
   </Card>
 )
 
-const Courses = ({ courses: { content }, deleteCourse }) => (console.log(content),
+const Courses = ({ courses: { content, coursesLoading }, deleteCourse }) => (console.log(content),
   <Column marginBetween='XS'>
     {content && content.map(props =>
       <CoursePreview key={props.id} {...props} deleteCourse={deleteCourse} />,
     )}
-    {!content &&
+    {coursesLoading &&
       <Segment style={{ height: '100px' }}>
         <Dimmer active inverted>
           <Loader inverted>Загрузка</Loader>
